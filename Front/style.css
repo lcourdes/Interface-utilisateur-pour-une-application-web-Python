@@ -1,0 +1,133 @@
+body {
+  background-color: #000;
+  color: white;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+header ul {
+  display: flex;
+}
+
+header ul li {
+  padding-left: 50px;
+  padding-right: 50px;
+  list-style-type: none;
+  font-size: large;
+}
+
+#featuredMovie-Background {
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+#featuredMovie {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  backdrop-filter: blur(15px);
+  background: linear-gradient(0.25turn, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+#featuredMovie-TextBlock {
+  padding-right: 30px;
+  max-width: 670px;
+}
+
+#featuredMovie-TextBlock h1 {
+  text-align: center;
+  padding-bottom: 50px;
+  font-size: 80px;
+}
+
+#featuredMovie-TextBlock img {
+  width: 250px;
+  height: auto;
+}
+
+#featuredMovie-TextBlock img:hover {
+    cursor: pointer;
+}
+
+#featuredMovie-ImageBlock {
+  padding-left: 30px;
+}
+
+#featuredMovie-ImageBlock img {
+  width: 130%;
+  height: auto;
+}
+
+.button{
+    display:inline-block;
+    width: 182px;
+    height: 268px;
+    border: none;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0);
+    background-color: rgba(110, 110, 110, 0.4);
+}
+  
+/* Modal Content */
+.modal-content {
+    background-color: #000000;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    overflow-y: auto;
+}
+  
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#allCategories h1 {
+  padding-top: 35px;
+  padding-left: 20px;
+}
+
+.arrow {
+  height: 45px;
+  width: auto;
+}
+
+.movies {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 20px;
+}
