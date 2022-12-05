@@ -154,7 +154,7 @@ class Category {
 	createFeaturedMovieButton() {
 		/* Cette méthode permet de créer un bouton pour le film mis en vedette. Ce bouton
 		est créé dans une sous div intitulée featuredMovie-TextBlock.
-		Si l'on clique sur le bouton : les fonctions createModal et writeMovieDetailsOnModal
+		Si l'on clique sur le bouton : les fonctions showModal et writeMovieDetailsOnModal
 		sont appelées.
 		*/
 		$("#featuredMovie").append('<div id="featuredMovie-TextBlock"></div>');
@@ -162,7 +162,7 @@ class Category {
 		button.src = "pictures/bouton_play.png";
 		button.alt = "Bouton Play.";
 		button.addEventListener("click", () => {
-			createModal();
+			showModal();
 			writeMovieDetailsOnModal(this.featuredMovieDetails);
 		});
 		$("#featuredMovie-TextBlock").append(button);
@@ -188,7 +188,7 @@ class Category {
 		/* Cette méthode permet de créer sept boutons qui sont ajoutés à la div choisie dans 
 		le fichier html.
 		Sur chaque bouton s'affiche l'image d'un film de la table this.sevenMoviesImageUrl.
-		Lorsque l'on clique sur un de ces boutons, les fonctions createModal et getMovieDetails
+		Lorsque l'on clique sur un de ces boutons, les fonctions showModal et getMovieDetails
 		sont appelées.
 		Les méthodes moveToLeftLeftButton et MoveToRightButton sont par défaut appelées. 
 		*/
@@ -201,7 +201,7 @@ class Category {
 			button.classList.add("button");
 			button.setAttribute('style', style);
 			button.addEventListener("click", () => {
-				createModal();
+				showModal();
 				this.getMovieDetails(this.sevenMoviesUrl[i]);
 			});
 			document.querySelector("#" + this.divName + "-Movies").appendChild(button);
@@ -303,7 +303,7 @@ function writeMovieDetailsOnModal(response) {
     $(myModalContent).append(myContent);
 }
 
-function createModal() {
+function showModal() {
     /* Cette fonction permet de faire en sorte que la div myModal soit affichée. 
     Pour plus de détails, voir dans le fichier css la partie relative à la modale.
     */
