@@ -1,15 +1,3 @@
-const moviesByScoreUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score"
-const moviesComedyByScoreUrl = "http://localhost:8000/api/v1/titles/?genre=Comedy&sort_by=-imdb_score"
-const movies1960ByScoreUrl = "http://localhost:8000/api/v1/titles/?year=&min_year=1960&max_year=1969&sort_by=-imdb_score"
-const moviesFrenchByScoreUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&country=france"
-
-$(document).ready(function() {
-	new Category("Les films les mieux notés", isFeatured = true, moviesByScoreUrl, "firstCategory");
-	new Category("Les meilleures comédies", isFeatured = false, moviesComedyByScoreUrl, "secondCategory");
-	new Category("Les meilleurs films des années 60", isFeatured = false, movies1960ByScoreUrl, "thirdCategory");
-	new Category("Les meilleurs films d'origine française", isFeatured = false, moviesFrenchByScoreUrl, "fourthCategory");
-});
-
 class Category {
 	/* Pour céer une instance de Category, quatre arguments sont nécessaires : 
 	    - title = une string qui correspondra au titre de la catégorie qui sera affiché sur la page.
@@ -40,7 +28,6 @@ class Category {
 		this.addTitleToCategory();
 		this.makeFirstRequest();
 	}
-
 
 	addTitleToCategory() {
 		/* Cette méthode permet d'inscire le titre de la catégorie 
@@ -157,7 +144,9 @@ class Category {
 		Si l'on clique sur le bouton : les fonctions showModal et writeMovieDetailsOnModal
 		sont appelées.
 		*/
-		$("#featuredMovie").append('<div id="featuredMovie-TextBlock"></div>');
+		let divFeaturedMovieTextBlock = document.createElement("div");
+		divFeaturedMovieTextBlock.id = "featuredMovie-TextBlock"
+		document.querySelector("#featuredMovie").appendChild(divFeaturedMovieTextBlock);
 		let button = document.createElement("img");
 		button.src = "pictures/bouton_play.png";
 		button.alt = "Bouton Play.";
@@ -165,7 +154,7 @@ class Category {
 			showModal();
 			writeMovieDetailsOnModal(this.featuredMovieDetails);
 		});
-		$("#featuredMovie-TextBlock").append(button);
+		document.querySelector("#featuredMovie-TextBlock").appendChild(button);
 	}
 
 	writeInFeaturedMovie() {
@@ -174,14 +163,24 @@ class Category {
 		Une seconde sous-div featuredMovie-ImageBlock est créée dans laquelle l'image du film mis 
 		en vedette est ajoutéée.
 		*/
-		$("#featuredMovie").append('<div id="featuredMovie-ImageBlock"></div>');
+		let divFeaturedMovieImageBlock = document.createElement("div");
+		divFeaturedMovieImageBlock.id = "featuredMovie-ImageBlock"
+		document.querySelector("#featuredMovie").appendChild(divFeaturedMovieImageBlock);
 		let img = document.createElement("img");
 		img.src = this.featuredMovieDetails.image_url;
 		img.alt = "Image de film.";
-		$("#featuredMovie-ImageBlock").append(img);
+		document.querySelector("#featuredMovie-ImageBlock").appendChild(img);
 		document.getElementById("featuredMovie-Background").style.backgroundImage = "url(" + this.featuredMovieDetails.image_url + ")";
-		$("#featuredMovie-TextBlock").prepend('<h1>' + this.featuredMovieDetails.title + '</h1>');
-		$("#featuredMovie-TextBlock").append('<p>' + this.featuredMovieDetails.description + '</p>');
+
+		let title = document.createElement("h1");
+		let myTitle = document.createTextNode(this.featuredMovieDetails.title);
+		title.appendChild(myTitle);
+		document.querySelector("#featuredMovie-TextBlock").prepend(title);
+
+		let description = document.createElement("p");
+		let mydescription = document.createTextNode(this.featuredMovieDetails.description);
+		description.appendChild(mydescription);
+		document.querySelector("#featuredMovie-TextBlock").appendChild(description);
 	}
 
 	addFourButtons() {
@@ -222,7 +221,7 @@ class Category {
 			this.moveToLeft();
 			this.addFourButtons();
 		});
-		$("#" + this.divName + "-Movies").prepend(button);
+		document.querySelector("#" + this.divName + "-Movies").prepend(button);
 	}
 
 	moveToRightButton() {
@@ -237,7 +236,7 @@ class Category {
 			this.moveToRight();
 			this.addFourButtons();
 		});
-		$("#" + this.divName + "-Movies").append(button);
+		document.querySelector("#" + this.divName + "-Movies").appendChild(button);
 	}
 
 	moveToLeft() {
@@ -288,19 +287,67 @@ function writeMovieDetailsOnModal(response) {
     /* Cette fonction permet d'inscrire dans la div ayant pour id "myModalContent" des 
     informations pour un film donné. 
     Les informations proviennent soit de this.modalMovieDetail soit de this.featuredMovieDetails.*/
-    let myContent = '<h1>' + response.title + '</h1>' +
-        '<img alt="Picture of Movie." src=' + response.image_url + '>' +
-        '<p>Genre : ' + response.genres + '</p>' +
-        '<p>Date de sortie : ' + response.year + '</p>' +
-        '<p>Rated : ' + response.rated + '</p>' +
-        '<p>Score Imdb : ' + response.imdb_score + '</p>' +
-        '<p>Réalisateur : ' + response.directors + '</p>' +
-        '<p>Acteurs : ' + response.actors + '</p>' +
-        '<p>Durée : ' + response.duration + ' minutes</p>' +
-        '<p>Pays d\'origine : ' + response.countries + '</p>' +
-        '<p>Résultat au Box Office : ' + response.worldwide_gross_income + '</p>' +
-        '<p>Résumé : ' + response.description + '</p>';
-    $(myModalContent).append(myContent);
+	let myModal = document.querySelector("#myModalContent")
+	
+	let title = document.createElement("h1");
+	let myTitle = document.createTextNode(response.title);
+	title.appendChild(myTitle);
+	myModal.appendChild(title);
+
+	let image = document.createElement("img");
+	image.src = response.image_url;
+	image.alt = "Picture of Movie.";
+	myModal.appendChild(image);
+
+	let gender = document.createElement("p");
+	let movieGender = document.createTextNode('Genre : ' + response.genres);
+	gender.appendChild(movieGender);
+	myModal.appendChild(gender);
+
+	let date = document.createElement("p");
+	let movieDate = document.createTextNode('Date de sortie : ' + response.year);
+	date.appendChild(movieDate);
+	myModal.appendChild(date);
+
+	let rated = document.createElement("p");
+	let movieRated = document.createTextNode('Rated : ' + response.rated);
+	rated.appendChild(movieRated);
+	myModal.appendChild(rated);
+
+	let score = document.createElement("p");
+	let movieScore = document.createTextNode('Score Imdb : ' + response.imdb_score);
+	score.appendChild(movieScore);
+	myModal.appendChild(score);
+
+	let directors = document.createElement("p");
+	let movieDirectors = document.createTextNode('Réalisateurs : ' + response.directors);
+	directors.appendChild(movieDirectors);
+	myModal.appendChild(directors);
+	
+	let actors = document.createElement("p");
+	let movieActors = document.createTextNode('Acteurs ' + response.actors);
+	directors.appendChild(movieActors);
+	myModal.appendChild(actors);
+
+	let duration = document.createElement("p");
+	let movieDuration = document.createTextNode('Durée : ' +response.duration + ' minutes');
+	duration.appendChild(movieDuration);
+	myModal.appendChild(duration);
+
+	let countries = document.createElement("p");
+	let movieCountries = document.createTextNode('Pays d\'origine : ' + response.countries);
+	countries.appendChild(movieCountries);
+	myModal.appendChild(countries);
+
+	let worldwideGrossIncome = document.createElement("p");
+	let movieWorldwideGrossIncome = document.createTextNode('Résultat au Box Office : ' + response.worldwide_gross_income);
+	worldwideGrossIncome.appendChild(movieWorldwideGrossIncome);
+	myModal.appendChild(worldwideGrossIncome);
+
+	let description = document.createElement("p");
+	let movieDescription = document.createTextNode('Résumé : ' + response.description);
+	description.appendChild(movieDescription);
+	myModal.appendChild(description);
 }
 
 function showModal() {
@@ -316,3 +363,13 @@ function showModal() {
         myModalContent.replaceChildren();
     };
 }
+
+const moviesByScoreUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score"
+const moviesComedyByScoreUrl = "http://localhost:8000/api/v1/titles/?genre=Comedy&sort_by=-imdb_score"
+const movies1960ByScoreUrl = "http://localhost:8000/api/v1/titles/?year=&min_year=1960&max_year=1969&sort_by=-imdb_score"
+const moviesFrenchByScoreUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&country=france"
+
+new Category("Les films les mieux notés", isFeatured = true, moviesByScoreUrl, "firstCategory");
+new Category("Les meilleures comédies", isFeatured = false, moviesComedyByScoreUrl, "secondCategory");
+new Category("Les meilleurs films des années 60", isFeatured = false, movies1960ByScoreUrl, "thirdCategory");
+new Category("Les meilleurs films d'origine française", isFeatured = false, moviesFrenchByScoreUrl, "fourthCategory");
