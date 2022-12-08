@@ -48,11 +48,11 @@ class Category {
 		fetch(this.url)
 			.then(response => response.json())
 			.then(data => {
-				if (data === {}) {
-					alert("La requête s'est terminée en échec.");
-				} else {
+				if ('results' in data) {
 					this.page1Response = data;
 					this.makeSecondRequest();
+				} else {
+					alert("La requête s'est terminée en échec.");
 				}
 			})
 			.catch(function(error) {
@@ -70,11 +70,11 @@ class Category {
 		fetch(this.page1Response.next)
 			.then(response => response.json())
 			.then(data => {
-				if (data === {}) {
-					alert("La requête s'est terminée en échec.");
-				} else {
+				if ('results' in data) {
 					this.page2Response = data;
 					this.getSevenMoviesUrlAndImages();
+				} else {
+					alert("La requête s'est terminée en échec.");
 				}
 			})
 			.catch(function(error) {
@@ -125,12 +125,12 @@ class Category {
 		fetch(this.page1Response.results[0].url)
 			.then(response => response.json())
 			.then(data => {
-				if (data === {}) {
-					alert("La requête s'est terminée en échec.");
-				} else {
+				if ('id' in data) {
 					this.featuredMovieDetails = data;
 					this.createFeaturedMovieButton();
 					this.writeInFeaturedMovie();
+				} else {
+					alert("La requête s'est terminée en échec.");
 				}
 			})
 			.catch(function(error) {
@@ -270,11 +270,11 @@ class Category {
 		fetch(url)
 			.then(response => response.json())
 			.then(data => {
-				if (data === {}) {
-					alert("La requête s'est terminée en échec.");
-				} else {
+				if ('id' in data) {
 					this.modalMovieDetail = data;
 					writeMovieDetailsOnModal(this.modalMovieDetail);
+				} else {
+					alert("La requête s'est terminée en échec.");
 				}
 			})
 			.catch(function(error) {
